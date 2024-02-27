@@ -652,20 +652,12 @@ body {
   height: 60px;
 }
 
-.h-\[_theme\(spacing\.10\)\] {
-  height: 2.5rem;
-}
-
-.min-h-\[calc\(100vh-_theme\(spacing\.10\)\)\] {
-  min-height: calc(100vh - 2.5rem);
+.min-h-\[calc\(100vh-_theme\(spacing\.10\)\)-120px\] {
+  min-height: calc(100vh - 2.5rem)-120px;
 }
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-\[calc\(100vh-_theme\(spacing\.10\)\)-120px\] {
-  min-height: calc(100vh - 2.5rem)-120px;
 }
 
 .w-1\/2 {
@@ -793,11 +785,6 @@ body {
   padding-bottom: 0.5rem;
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -854,15 +841,6 @@ body {
   color: hsl(var(--primary-foreground));
 }
 
-.text-blue-400 {
-  --tw-text-opacity: 1;
-  color: rgb(96 165 250 / var(--tw-text-opacity));
-}
-
-.text-primary {
-  color: hsl(var(--primary));
-}
-
 .ring-offset-background {
   --tw-ring-offset-color: hsl(var(--background));
 }
@@ -871,20 +849,6 @@ body {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-@keyframes enter {
-  from {
-    opacity: var(--tw-enter-opacity, 1);
-    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0));
-  }
-}
-
-@keyframes exit {
-  to {
-    opacity: var(--tw-exit-opacity, 1);
-    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
-  }
 }
 
 .file\:border-0::file-selector-button {

@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import manifest from '__STATIC_CONTENT_MANIFEST'
 
-import { Layout, Item } from './home'
+import { Layout, About, TaskList, Item } from './home'
 
 type Bindings = {
   DB: D1Database
@@ -40,11 +40,17 @@ app.get('/', async (c) => {
   const todos = results as unknown as Todo[] // Currently, should fix a type mismatch.
   return c.html(
     <Layout>
-      {todos.map((todo) => {
-        return <Item title={todo.title} id={todo.id} checked={todo.checked} />
-      })}
+      <TaskList>
+        {todos.map((todo) => {
+          return <Item title={todo.title} id={todo.id} checked={todo.checked} />
+        })}
+      </TaskList>
     </Layout>
   )
+})
+
+app.get('/about', async (c) => {
+  return c.html(<Layout><About /></Layout>)
 })
 
 app.post(

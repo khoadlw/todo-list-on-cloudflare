@@ -1,21 +1,18 @@
 import { html } from "hono/html"
 
-export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
+export const Layout = (props: { children: any }) => html`
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Todo app built with Hono on Cloudflare">
   <meta name="author" content="khoadlw">
-  <title>Todo CF HN</title>
+  <title>Our Todo List</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-
-  <!--
-  // v0 by Vercel.
-  // https://v0.dev/t/fHlAQTSnVYn
-  -->
 
   <div class="flex flex-col min-h-screen max-w-screen-md mx-auto">
     <header class="flex items-center h-[60px] px-4 border-b lg:px-6">
@@ -41,21 +38,21 @@ export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
       <nav class="ml-auto flex items-center gap-4 shrink-0 lg:gap-6">
         <a
           class="flex items-center gap-2 font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-          href="#"
+          href="/"
           rel="ugc"
         >
           Home
         </a>
         <a
           class="flex items-center gap-2 font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-          href="#"
+          href="/"
           rel="ugc"
         >
           Tasks
         </a>
         <a
           class="flex items-center gap-2 font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-          href="#"
+          href="/about"
           rel="ugc"
         >
           About
@@ -63,36 +60,7 @@ export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
       </nav>
     </header>
     <main class="flex-1 overflow-y-auto pb-4">
-      <div class="container flex flex-col min-h-[calc(100vh-_theme(spacing.10))-120px] gap-4 px-4 md:gap-10 md:px-6">
-        <div class="mx-auto flex flex-col gap-2 text-center">
-          <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl py-6">Our Tasks</h1>
-          <form
-            hx-post="/todo" hx-target="#todo" hx-swap="afterend"
-            _="on htmx:afterRequest reset() me"
-            class="flex items-center gap-4"
-          >
-            <div class="flex-1">
-              <input
-                name="title"
-                type="text"
-                class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
-                id="new-task"
-                placeholder="Add a new task..."
-              />
-            </div>
-            <button
-              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-              type="submit"
-            >
-              Add
-            </button>
-          </form>
-        </div>
-        <div class="grid gap-2">
-          <div id="todo"></div>
-          ${props.children}
-        </div>
-      </div>
+      ${props.children}
     </main>
     <footer class="flex items-center h-[60px] px-4 border-t shrink-0 lg:px-6">
       <div class="mx-auto flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
@@ -104,7 +72,45 @@ export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
   <script defer src="/js/htmx.min.js"></script>
   <script defer src="/js/_hyperscript.min.js"></script>
 </body>
-</html>`
+</html>
+`
+
+export const About = () => html`
+<h1>This is the About page.</h1>
+`
+
+export const TaskList = (props: { children: any }) => html`
+<div class="container flex flex-col min-h-[calc(100vh-_theme(spacing.10))-120px] gap-4 px-4 md:gap-10 md:px-6">
+  <div class="mx-auto flex flex-col gap-2 text-center">
+    <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl py-6">Our Tasks</h1>
+    <form
+      hx-post="/todo" hx-target="#todo" hx-swap="afterend"
+      _="on htmx:afterRequest reset() me"
+      class="flex items-center gap-4"
+    >
+      <div class="flex-1">
+        <input
+          name="title"
+          type="text"
+          class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
+          id="new-task"
+          placeholder="Add a new task..."
+        />
+      </div>
+      <button
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+        type="submit"
+      >
+        Add
+      </button>
+    </form>
+  </div>
+  <div class="grid gap-2">
+    <div id="todo"></div>
+    ${props.children}
+  </div>
+</div>
+`
 
 export const Item = ({ title, id, checked }: { title: string; id: string, checked: boolean }) => (
   <div id={`task-${id}`} class="flex items-center gap-4">
