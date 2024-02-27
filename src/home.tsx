@@ -66,7 +66,11 @@ export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
       <div class="container flex flex-col min-h-[calc(100vh-_theme(spacing.10))-120px] gap-4 px-4 md:gap-10 md:px-6">
         <div class="mx-auto flex flex-col gap-2 text-center">
           <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl py-6">Our Tasks</h1>
-          <form hx-post="/todo" hx-target="#todo" hx-swap="afterend" _="on htmx:afterRequest reset() me" class="flex items-center gap-4">
+          <form
+            hx-post="/todo" hx-target="#todo" hx-swap="afterend"
+            _="on htmx:afterRequest reset() me"
+            class="flex items-center gap-4"
+          >
             <div class="flex-1">
               <input
                 name="title"
@@ -92,7 +96,7 @@ export const Layout = (props: { children: any }) => html`<!DOCTYPE html>
     </main>
     <footer class="flex items-center h-[60px] px-4 border-t shrink-0 lg:px-6">
       <div class="mx-auto flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-        <span>? tasks left</span>
+        <span>Made by <span class="italic">khoadlw</span></span>
       </div>
     </footer>
   </div>
