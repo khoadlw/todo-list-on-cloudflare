@@ -1,8 +1,12 @@
 name = "todo-cfhn"
 compatibility_date = "2023-12-01"
+main = "index.tsx"
 
 # [vars]
 # MY_VARIABLE = "production_value"
+
+[site]
+bucket = "./public"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
@@ -12,7 +16,7 @@ compatibility_date = "2023-12-01"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "todo"
+database_id = "af7af470-d79c-4817-a300-2a2230058bbf"

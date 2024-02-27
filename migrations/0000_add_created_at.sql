@@ -1,0 +1,3 @@
+-- Migration number: 0000 	 2024-02-27T12:15:28.957Z
+
+ALTER TABLE todo ADD COLUMN created_at INT DEFAULT 0 NOT NULL;
