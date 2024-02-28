@@ -46,7 +46,6 @@ npm run dev
 ```
 wrangler d1 execute todo --file=todo.sql
 wrangler d1 migrations apply todo
-
 ```
 
 ```

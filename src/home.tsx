@@ -80,7 +80,7 @@ export const About = () => html`
   <p class="text-center text-base mb-4">
     This app is built with these latest technologies
   </p>
-  <div class="flex flex-row flex-wrap justify-center space-x-4">
+  <div class="columns-2 sm:columns-4 w-fit mx-auto">
     <div class="flex flex-col items-center">
       <div class="bg-gray-200 p-4 rounded-lg">
         <svg
@@ -95,7 +95,7 @@ export const About = () => html`
           <path fill="#faae40" d="M381 224c-4 0-6-1-7 1l-5 21c-5 16 3 30 20 31l32 2c4 0 4 6-1 7l-33 1c-36 4-46 39-46 39 0 2 0 3 2 3h113l3-2a81 81 0 0 0-78-103"/>
         </svg>
       </div>
-      <span class="mt-2 hover:text-blue-600"><a href="https://developers.cloudflare.com/">Cloudflare</a></span>
+      <span class="my-2 hover:text-blue-600"><a href="https://developers.cloudflare.com/">Cloudflare</a></span>
     </div>
     <div class="flex flex-col items-center">
       <div class="bg-gray-200 p-4 rounded-lg">
@@ -113,7 +113,7 @@ export const About = () => html`
           </g>
         </svg>
       </div>
-      <span class="mt-2 hover:text-blue-600"><a href="https://hono.dev/">Hono</a></span>
+      <span class="my-2 hover:text-blue-600"><a href="https://hono.dev/">Hono</a></span>
     </div>
     <div class="flex flex-col items-center">
       <div class="bg-gray-200 p-4 rounded-lg">
@@ -130,7 +130,7 @@ export const About = () => html`
           <path fill="#333333" d="   M 94.69 40.63   L 97.78 31.16   A 0.32 0.32 0.0 0 1 98.21 30.96   L 133.81 45.84   A 0.32 0.32 0.0 0 1 134.01 46.13   L 134.00 56.05   A 0.32 0.32 0.0 0 1 133.80 56.34   L 98.20 71.21   A 0.32 0.32 0.0 0 1 97.77 71.01   L 94.69 61.54   A 0.32 0.32 0.0 0 1 94.88 61.14   L 120.21 51.38   A 0.32 0.32 0.0 0 0 120.21 50.78   L 94.88 41.03   A 0.32 0.32 0.0 0 1 94.69 40.63   Z"/>
         </svg>
       </div>
-      <span class="mt-2 hover:text-blue-600"><a href="https://htmx.org/">htmx</a></span>
+      <span class="my-2 hover:text-blue-600"><a href="https://htmx.org/">htmx</a></span>
     </div>
     <div class="flex flex-col items-center">
       <div class="bg-gray-200 p-4 rounded-lg">
@@ -149,7 +149,7 @@ export const About = () => html`
           <path d="m128 0c-34.1333333 0-55.4666667 17.0666667-64 51.2 12.8-17.0666667 27.7333333-23.4666667 44.8-19.2 9.737481 2.4343704 16.697363 9.4985481 24.401067 17.3184 12.549689 12.7383704 27.07437 27.4816 58.798933 27.4816 34.133333 0 55.466667-17.0666667 64-51.2-12.8 17.0666667-27.733333 23.4666667-44.8 19.2-9.737481-2.4343704-16.697363-9.4985481-24.401067-17.3184-12.549689-12.7383704-27.07437-27.4816-58.798933-27.4816zm-64 76.8c-34.1333333 0-55.46666667 17.0666667-64 51.2 12.8-17.066667 27.7333333-23.466667 44.8-19.2 9.7374815 2.43437 16.697363 9.498548 24.4010667 17.3184 12.5496889 12.73837 27.0743703 27.4816 58.7989333 27.4816 34.133333 0 55.466667-17.066667 64-51.2-12.8 17.066667-27.733333 23.466667-44.8 19.2-9.737481-2.43437-16.697363-9.498548-24.401067-17.3184-12.549689-12.7383704-27.07437-27.4816-58.798933-27.4816z" fill="url(#a)"/>
         </svg>
       </div>
-      <span class="mt-2 hover:text-blue-600"><a href="https://tailwindcss.com/">Tailwind CSS</a></span>
+      <span class="my-2 hover:text-blue-600"><a href="https://tailwindcss.com/">Tailwind CSS</a></span>
     </div>
   </div>
   <p class="text-center text-base mt-8" id="04a98632use2">
