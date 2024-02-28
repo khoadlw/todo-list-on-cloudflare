@@ -80,7 +80,7 @@ export const About = () => html`
   <p class="text-center text-base mb-4">
     This app is built with these latest technologies
   </p>
-  <div class="flex justify-center space-x-4">
+  <div class="flex flex-row flex-wrap justify-center space-x-4">
     <div class="flex flex-col items-center">
       <div class="bg-gray-200 p-4 rounded-lg">
         <svg
