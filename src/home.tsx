@@ -153,7 +153,10 @@ export const About = () => html`
     </div>
   </div>
   <p class="text-center text-base mt-8" id="04a98632use2">
-    <a class="text-black font-medium underline underline-offset-4 hover:no-underline hover:text-blue-600" href="#">
+    <a
+      class="text-black font-medium underline underline-offset-4 hover:no-underline hover:text-blue-600"
+      href="https://github.com/khoadlw/todo-list-on-cloudflare"
+    >
       Check out the code on GitHub
     </a>
   </p>
