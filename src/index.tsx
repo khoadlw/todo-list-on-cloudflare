@@ -18,19 +18,22 @@ type Todo = {
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-app.get('/*', serveStatic({ root: './', manifest }))
-
 app.use('/images/*', async (c, next) => {
   c.header('Cache-Control', 'public, max-age=31536000')
+  await next()
 })
 
 app.use('/js/*', async (c, next) => {
   c.header('Cache-Control', 'public, max-age=31536000')
+  await next()
 })
 
 app.use('/css/*', async (c, next) => {
   c.header('Cache-Control', 'public, max-age=604800')
+  await next()
 })
+
+app.use('/*', serveStatic({ root: './', manifest }))
 
 app.get('/', async (c) => {
   // TODO: order by doesn't work here due to the primary key being of type UUID
