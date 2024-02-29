@@ -213,7 +213,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         </svg>
       </span>
     </button>
-    <label for="task-1" class="flex-1 cursor-pointer select-none w-1/2">
+    <label for="task-1" class="flex-1 cursor-text w-1/2">
       {title}
     </label>
     <button hx-delete={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8">
