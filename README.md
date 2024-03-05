@@ -19,11 +19,11 @@
 ### Steps
 
 ```
-npx wrangler login  # install + log in
+npm install
 ```
 
 ```
-npm install
+npx wrangler login  # install + log in
 ```
 
 ```
@@ -31,10 +31,10 @@ npx tailwindcss -i ./src/globals.css -o ./public/css/styles.css
 ```
 
 ```
-wrangler d1 create todo
+npx wrangler d1 create todo
 # Then change the `database_id` in `wrangler.toml` accordingly
-wrangler d1 execute todo --local --file=todo.sql
-wrangler d1 migrations apply todo --local
+npx wrangler d1 execute todo --local --file=todo.sql
+npx wrangler d1 migrations apply todo --local
 ```
 
 ```
@@ -44,8 +44,8 @@ npm run dev
 ## Deployment
 
 ```
-wrangler d1 execute todo --file=todo.sql
-wrangler d1 migrations apply todo
+npx wrangler d1 execute todo --file=todo.sql
+npx wrangler d1 migrations apply todo
 ```
 
 ```
