@@ -38,7 +38,7 @@ app.use('/*', serveStatic({ root: './', manifest }))
 app.get('/', async (c) => {
   // TODO: order by doesn't work here due to the primary key being of type UUID
   const { results } = await c.env.DB.prepare(
-    `SELECT id, title, checked FROM todo ORDER BY checked ASC, created_at DESC;`
+    `SELECT id, title, checked FROM todo WHERE is_deleted = 0 ORDER BY checked ASC, created_at DESC;`
   ).all<Todo>()
   const todos = results as unknown as Todo[] // Currently, should fix a type mismatch.
   return c.html(
@@ -99,7 +99,7 @@ app.put(
 
 app.delete('/todo/:id', async (c) => {
   const id = c.req.param('id')
-  await c.env.DB.prepare(`DELETE FROM todo WHERE id = ?;`).bind(id).run()
+  await c.env.DB.prepare(`UPDATE todo SET is_deleted = 1 WHERE id = ?;`).bind(id).run()
   c.status(200)
   return c.body(null)
 })

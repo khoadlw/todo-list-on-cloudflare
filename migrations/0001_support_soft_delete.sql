@@ -1,0 +1,3 @@
+-- Migration number: 0001 	 2024-03-23T06:27:12.298Z
+
+ALTER TABLE todo ADD COLUMN is_deleted INT DEFAULT 0 NOT NULL;
