@@ -2,6 +2,8 @@ import { Hono } from 'hono'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
+
+// @ts-ignore -- hack for Cloudflare Workers only
 import manifest from '__STATIC_CONTENT_MANIFEST'
 
 import { Layout, About, TaskList, Item } from './home'

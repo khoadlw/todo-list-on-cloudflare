@@ -12,9 +12,9 @@ export const Layout = (props: { children: any }) => html`
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
+<body class="overflow-y-clip">
 
-  <div class="flex flex-col min-h-screen max-w-screen-md mx-auto">
+  <div class="flex flex-col h-screen max-w-screen-md mx-auto">
     <header class="flex items-center h-[60px] px-4 border-b lg:px-6">
       <a class="flex items-center gap-2 font-semibold" href="#" rel="ugc">
         <svg
@@ -165,7 +165,7 @@ export const About = () => html`
 
 export const TaskList = (props: { children: any }) => html`
 <div
-  class="container flex flex-col gap-4 px-4 md:gap-10 md:px-6"
+  class="container flex flex-col gap-4 px-4 md:gap-10 md:px-0"
   _="
     on htmx:beforeRequest
       wait for htmx:afterRequest or 150ms
@@ -197,7 +197,7 @@ export const TaskList = (props: { children: any }) => html`
       </button>
     </form>
   </div>
-  <div class="grid gap-2">
+  <div class="grid gap-2 overflow-y-auto scrollbar:!w-1.5 scrollbar:!h-1.5 scrollbar:bg-transparent scrollbar-track:!bg-slate-100 scrollbar-thumb:!rounded scrollbar-thumb:!bg-slate-300 scrollbar-track:!rounded supports-scrollbars:pr-2">
     <div id="todo"></div>
     ${props.children}
   </div>
