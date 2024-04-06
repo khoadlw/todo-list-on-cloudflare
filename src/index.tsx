@@ -89,6 +89,9 @@ app.put(
   console.log(`checked: ${typeof checked} = ${checked}`)  // ================ //
   await c.env.DB.prepare(`UPDATE todo SET checked = ? WHERE id = ?;`).bind(checked, id).run()
   const todo = await c.env.DB.prepare(`SELECT id, title, checked FROM todo WHERE ID = ?;`).bind(id).first<Todo>()
+
+  await new Promise(resolve => setTimeout(resolve, 500)) // simulate latency
+
   if (todo) {
     return c.html(<Item title={todo.title} id={todo.id} checked={Boolean(todo.checked)} />)
   } else {

@@ -164,7 +164,16 @@ export const About = () => html`
 `
 
 export const TaskList = (props: { children: any }) => html`
-<div class="container flex flex-col gap-4 px-4 md:gap-10 md:px-6">
+<div
+  class="container flex flex-col gap-4 px-4 md:gap-10 md:px-6"
+  _="
+    on htmx:beforeRequest
+      wait for htmx:afterRequest or 150ms
+      then log the result -- for debugging purposes
+      if the result is 150 remove .hidden from #loading end
+    on htmx:afterRequest add .hidden to #loading
+  "
+>
   <div class="mx-auto flex flex-col gap-2 text-center">
     <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl py-6">Our Tasks</h1>
     <form
@@ -193,6 +202,32 @@ export const TaskList = (props: { children: any }) => html`
     <div id="todo"></div>
     ${props.children}
   </div>
+  <div id="loading" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+    <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+    <div class="p-4 bg-gray-200/90 rounded-full flex items-center space-x-4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="animate-spin h-6 w-6"
+      >
+        <line x1="12" x2="12" y1="2" y2="6"/>
+        <line x1="12" x2="12" y1="18" y2="22"/>
+        <line x1="4.93" x2="7.76" y1="4.93" y2="7.76"/>
+        <line x1="16.24" x2="19.07" y1="16.24" y2="19.07"/>
+        <line x1="2" x2="6" y1="12" y2="12"/>
+        <line x1="18" x2="22" y1="12" y2="12"/>
+        <line x1="4.93" x2="7.76" y1="19.07" y2="16.24"/>
+        <line x1="16.24" x2="19.07" y1="7.76" y2="4.93"/>
+      </svg>
+    </div>
+  </div>
 </div>
 `
 
@@ -213,7 +248,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         </svg>
       </span>
     </button>
-    <label for="task-1" class="flex-1 cursor-text w-1/2">
+    <label for="task-1" class={`${checked ? "line-through" : ""} flex-1 cursor-text w-1/2`}>
       {title}
     </label>
     <button hx-delete={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8">
