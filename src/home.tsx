@@ -169,7 +169,6 @@ export const TaskList = (props: { children: any }) => html`
   _="
     on htmx:beforeRequest
       wait for htmx:afterRequest or 150ms
-      then log the result -- for debugging purposes
       if the result is 150 remove .hidden from #loading end
     on htmx:afterRequest add .hidden to #loading
   "
