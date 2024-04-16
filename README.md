@@ -38,6 +38,12 @@ npx wrangler d1 migrations apply todo --local
 ```
 
 ```
+touch .dev.vars
+echo "USERNAME=<your-user-name>" >> .dev.vars
+echo "PASSWORD=<your-password>" >> .dev.vars
+```
+
+```
 npm run dev
 ```
 
@@ -46,6 +52,11 @@ npm run dev
 ```
 npx wrangler d1 execute todo --file=todo.sql
 npx wrangler d1 migrations apply todo
+```
+
+```
+npx wrangler secret put USERNAME
+npx wrangler secret put PASSWORD
 ```
 
 ```

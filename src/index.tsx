@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { basicAuth } from 'hono/basic-auth'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
@@ -10,6 +11,8 @@ import { Layout, About, TaskList, Item } from './home'
 
 type Bindings = {
   DB: D1Database
+  USERNAME: string
+  PASSWORD: string
 }
 
 type Todo = {
@@ -33,6 +36,14 @@ app.use('/js/*', async (c, next) => {
 app.use('/css/*', async (c, next) => {
   c.header('Cache-Control', 'public, max-age=604800')
   await next()
+})
+
+app.use('/*', async (c, next) => {
+  const auth = basicAuth({
+    username: c.env.USERNAME,
+    password: c.env.PASSWORD,
+  })
+  return auth(c, next)
 })
 
 app.use('/*', serveStatic({ root: './', manifest }))
