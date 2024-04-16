@@ -3,7 +3,7 @@ import { serveStatic } from 'hono/cloudflare-workers'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 
-// @ts-ignore -- hack for Cloudflare Workers only
+// @ts-ignore -- this is a hack for Cloudflare Workers only
 import manifest from '__STATIC_CONTENT_MANIFEST'
 
 import { Layout, About, TaskList, Item } from './home'
@@ -38,11 +38,10 @@ app.use('/css/*', async (c, next) => {
 app.use('/*', serveStatic({ root: './', manifest }))
 
 app.get('/', async (c) => {
-  // TODO: order by doesn't work here due to the primary key being of type UUID
   const { results } = await c.env.DB.prepare(
     `SELECT id, title, checked FROM todo WHERE is_deleted = 0 ORDER BY checked ASC, created_at DESC;`
   ).all<Todo>()
-  const todos = results as unknown as Todo[] // Currently, should fix a type mismatch.
+  const todos = results as unknown as Todo[]
   return c.html(
     <Layout>
       <TaskList>

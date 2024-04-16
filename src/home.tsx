@@ -202,7 +202,7 @@ export const TaskList = (props: { children: any }) => html`
     ${props.children}
   </div>
   <div id="loading" class="hidden fixed inset-0 z-50 flex items-center justify-center">
-    <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+    <div class="absolute inset-0 bg-white bg-opacity-50"></div>
     <div class="p-4 bg-gray-200/90 rounded-full flex items-center space-x-4">
       <svg
         xmlns="http://www.w3.org/2000/svg"
