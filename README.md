@@ -31,6 +31,7 @@ npx tailwindcss -i ./src/globals.css -o ./public/css/styles.css
 ```
 
 ```
+mkdir public/js
 curl https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js -o public/js/htmx.min.js
 curl https://unpkg.com/hyperscript.org@0.9.12/dist/_hyperscript.min.js -o public/js/_hyperscript.min.js
 ```
