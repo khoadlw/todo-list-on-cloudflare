@@ -8,7 +8,7 @@ export const Layout = (props: { children: any }) => html`
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Todo app built with Hono on Cloudflare">
   <meta name="author" content="khoadlw">
-  <title>Our Todo List</title>
+  <title>Indie TODO List</title>
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -173,11 +173,11 @@ export const TaskList = (props: { children: any }) => html`
     on htmx:afterRequest add .hidden to #loading
   "
 >
-  <div class="mx-auto flex flex-col gap-2 text-center">
-    <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl py-6">Our Tasks</h1>
+  <div class="mx-auto flex flex-col gap-2 text-center" id="title-add">
+    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl py-6">My Tasks</h1>
     <form
       hx-post="/todo" hx-target="#todo" hx-swap="afterend"
-      _="on htmx:afterRequest reset() me"
+      _="on htmx:afterRequest reset() me then add .mx-auto to #title-add"
       class="flex items-center gap-4"
     >
       <div class="flex-1">
@@ -187,6 +187,7 @@ export const TaskList = (props: { children: any }) => html`
           class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
           id="new-task"
           placeholder="Add a new task..."
+          _="on keyup if the length of my value is greater than 25 then remove .mx-auto from #title-add then add .mx-1 to #title-add"
         />
       </div>
       <button

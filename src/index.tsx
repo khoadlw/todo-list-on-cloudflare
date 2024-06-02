@@ -56,9 +56,7 @@ app.get('/', async (c) => {
   return c.html(
     <Layout>
       <TaskList>
-        {todos.map((todo) => {
-          return <Item title={todo.title} id={todo.id} checked={todo.checked} />
-        })}
+        {todos.map((todo) => <Item {...todo} />)}
       </TaskList>
     </Layout>
   )
@@ -70,12 +68,7 @@ app.get('/about', async (c) => {
 
 app.post(
   '/todo',
-  zValidator(
-    'form',
-    z.object({
-      title: z.string().min(1)
-    })
-  ),
+  zValidator('form', z.object({ title: z.string().min(1) })),
   async (c) => {
     const { title } = c.req.valid('form')
     const id = crypto.randomUUID()
@@ -89,12 +82,7 @@ app.post(
 
 app.put(
   '/todo/:id',
-  zValidator(
-    'form',
-    z.object({
-      checked: z.string().pipe(z.coerce.number())
-    })
-  ),
+  zValidator('form', z.object({ checked: z.coerce.number() })),
   async (c) => {
   const id = c.req.param('id')
   const { checked } = c.req.valid('form')
