@@ -27,7 +27,7 @@ export const Layout = (props: { children: any }) => html`
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="w-6 h-6 fill-current"
+          class="w-6 h-6"
         >
           <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
           <path d="m3.3 7 8.7 5 8.7-5"></path>
