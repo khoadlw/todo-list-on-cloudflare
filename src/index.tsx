@@ -82,11 +82,23 @@ app.post(
 
 app.put(
   '/todo/:id',
-  zValidator('form', z.object({ checked: z.coerce.number() })),
+  zValidator(
+    'form',
+    z.object({
+      checked: z.coerce.number().optional(),
+      title: z.string().min(1).optional()
+    }).refine(
+      data => data.checked != null || data.title != null
+    )
+  ),
   async (c) => {
   const id = c.req.param('id')
-  const { checked } = c.req.valid('form')
-  await c.env.DB.prepare(`UPDATE todo SET checked = ? WHERE id = ?;`).bind(checked, id).run()
+  const { checked, title } = c.req.valid('form')
+  console.log({ checked, title })
+  // NOTE: undefined == null
+  const updates = [checked != null ? 'checked = ?' : '', title != null ? 'title = ?' : ''].filter(u => u)
+  const updateValues = [checked, title].filter(v => v != null)
+  await c.env.DB.prepare(`UPDATE todo SET ${updates.join(', ')} WHERE id = ?;`).bind(...updateValues, id).run()
   const todo = await c.env.DB.prepare(`SELECT id, title, checked FROM todo WHERE ID = ?;`).bind(id).first<Todo>()
   if (todo) {
     return c.html(<Item title={todo.title} id={todo.id} checked={Boolean(todo.checked)} />)

@@ -248,9 +248,62 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         </svg>
       </span>
     </button>
-    <label for="task-1" class={`${checked ? "line-through" : ""} flex-1 cursor-text w-1/2`}>
+    <textarea
+      hx-put={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" hx-trigger="keydown[key=='Enter']"
+      onkeydown="if (event.key === 'Enter') { event.preventDefault(); } else if (event.key === 'Escape') { this.disabled = true; this.style.borderBottom = 'none'; }"
+      oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
+      _="init set my.style.height to 'auto' then set my.style.height to (my.scrollHeight + 'px')"
+      id={`task-title-${id}`}
+      class={`titleInput ${checked ? "line-through" : ""} flex-1 cursor-text bg-transparent outline-none w-1/2 resize-none overflow-y-hidden`}
+      name="title"
+      rows={1}
+      disabled
+    >
       {title}
-    </label>
+    </textarea>
+    <button
+      onclick="
+        const input = this.previousElementSibling;
+        input.disabled = false; input.focus();
+        input.selectionStart = input.selectionEnd = input.value.length;
+        input.style.borderBottom = 'solid';
+      "
+      class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-4 h-4"
+      >
+        <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+        <path d="m15 5 4 4"/>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="w-4 h-4 hidden"
+      >
+        <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/>
+        <path d="M7 3v4a1 1 0 0 0 1 1h7"/>
+      </svg>
+      <span class="sr-only">Edit</span>
+      <span class="sr-only hidden">Save</span>
+    </button>
     <button hx-delete={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"
