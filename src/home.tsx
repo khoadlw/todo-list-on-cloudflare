@@ -250,9 +250,14 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     </button>
     <textarea
       hx-put={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" hx-trigger="keydown[key=='Enter']"
-      onkeydown="if (event.key === 'Enter') { event.preventDefault(); } else if (event.key === 'Escape') { this.disabled = true; this.style.borderBottom = 'none'; }"
-      oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"
-      _="init set my.style.height to 'auto' then set my.style.height to (my.scrollHeight + 'px')"
+      _="
+        -- Behavior: AutoResize + Editable
+        def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
+        init immediately call autoResize(me)
+        on input call autoResize(me)
+        on keydown[key is 'Enter'] halt the event
+        on keydown[key is 'Escape'] add @disabled then set *border-bottom to 'dashed'
+      "
       id={`task-title-${id}`}
       class={`titleInput ${checked ? "line-through" : ""} flex-1 cursor-text bg-transparent outline-none w-1/2 resize-none overflow-y-hidden`}
       name="title"
@@ -262,11 +267,12 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
       {title}
     </textarea>
     <button
-      onclick="
-        const input = this.previousElementSibling;
-        input.disabled = false; input.focus();
-        input.selectionStart = input.selectionEnd = input.value.length;
-        input.style.borderBottom = 'solid';
+      _="
+        on click
+          set input to my previousElementSibling
+          remove @disabled from input then call input.focus()
+          set input's selectionStart to input.value.length then set input's selectionEnd to input.value.length
+          set input's *border-bottom to 'solid'
       "
       class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8"
     >
@@ -285,6 +291,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
         <path d="m15 5 4 4"/>
       </svg>
+      <span class="sr-only">Edit</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -297,12 +304,10 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         stroke-linejoin="round"
         class="w-4 h-4 hidden"
       >
-        <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
-        <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/>
-        <path d="M7 3v4a1 1 0 0 0 1 1h7"/>
+        <path d="M9 14 4 9l5-5"/>
+        <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/>
       </svg>
-      <span class="sr-only">Edit</span>
-      <span class="sr-only hidden">Save</span>
+      <span class="sr-only hidden">Discard</span>
     </button>
     <button hx-delete={`/todo/${id}`} hx-target={`#task-${id}`} hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8">
       <svg

@@ -94,7 +94,6 @@ app.put(
   async (c) => {
   const id = c.req.param('id')
   const { checked, title } = c.req.valid('form')
-  console.log({ checked, title })
   // NOTE: undefined == null
   const updates = [checked != null ? 'checked = ?' : '', title != null ? 'title = ?' : ''].filter(u => u)
   const updateValues = [checked, title].filter(v => v != null)
