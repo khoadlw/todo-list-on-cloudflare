@@ -253,10 +253,11 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
       _="
         -- Behavior: AutoResize + Editable
         def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
-        init immediately call autoResize(me)
+        init immediately call autoResize(me) then set :original to my value
         on input call autoResize(me)
         on keydown[key is 'Enter'] halt the event
-        on keydown[key is 'Escape'] add @disabled then set *border-bottom to 'dashed'
+        on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
+        on blur if I do not match @disabled add .border-dashed
       "
       id={`task-title-${id}`}
       class={`titleInput ${checked ? "line-through" : ""} flex-1 cursor-text bg-transparent outline-none w-1/2 resize-none overflow-y-hidden`}
@@ -272,7 +273,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
           set input to my previousElementSibling
           remove @disabled from input then call input.focus()
           set input's selectionStart to input.value.length then set input's selectionEnd to input.value.length
-          set input's *border-bottom to 'solid'
+          add .border-b .border-input to input
       "
       class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground w-8 h-8"
     >
