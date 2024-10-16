@@ -198,7 +198,7 @@ export const TaskList = (props: { children: any }) => html`
       </button>
     </form>
   </div>
-  <div class="grid gap-2 overflow-y-auto scrollbar:!w-1.5 scrollbar:!h-1.5 scrollbar:bg-transparent scrollbar-track:!bg-slate-100 scrollbar-thumb:!rounded scrollbar-thumb:!bg-slate-300 scrollbar-track:!rounded supports-scrollbars:pr-2">
+  <div class="grid gap-2 overflow-y-auto scrollbar:!w-1.5 scrollbar:!h-1.5 scrollbar:bg-transparent scrollbar-track:!bg-slate-100 scrollbar-thumb:!rounded scrollbar-thumb:!bg-slate-300 scrollbar-track:!rounded px-2">
     <div id="todo"></div>
     ${props.children}
   </div>
