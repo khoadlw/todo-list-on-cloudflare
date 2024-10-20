@@ -255,6 +255,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
         init immediately call autoResize(me) then set :original to my value
         on input call autoResize(me)
+        on resize from window call autoResize(me)
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
         on blur if I do not match @disabled add .border-dashed
