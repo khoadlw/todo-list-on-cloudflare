@@ -1,16 +1,16 @@
+import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
-import { logger } from 'hono/logger'
-import { timing, setMetric, startTime, endTime } from 'hono/timing'
-import type { TimingVariables } from 'hono/timing'
 import { basicAuth } from 'hono/basic-auth'
 import { serveStatic } from 'hono/cloudflare-workers'
+import { logger } from 'hono/logger'
+import type { TimingVariables } from 'hono/timing'
+import { endTime, startTime, timing } from 'hono/timing'
 import { z } from 'zod'
-import { zValidator } from '@hono/zod-validator'
 
 // @ts-ignore -- this is a hack for Cloudflare Workers only
 import manifest from '__STATIC_CONTENT_MANIFEST'
 
-import { Layout, About, TaskList, Item } from './home'
+import { About, Item, Layout, TaskList } from './home'
 
 type Variables = TimingVariables
 
