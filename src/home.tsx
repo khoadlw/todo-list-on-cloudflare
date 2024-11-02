@@ -261,7 +261,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         on blur if I do not match @disabled add .border-dashed end
         on paste
           set clipboardItems to event.clipboardData.items
-          set imagePreview to #imagePreview
+          set imagePreview to my nextElementSibling
           repeat for item in clipboardItems
             if item.type.startsWith('image/')
               js(item, imagePreview)
@@ -287,7 +287,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     >
       {title}
     </textarea>
-    <img id="imagePreview" class="w-8 h-auto overflow-y-clip hidden" alt="Pasted Image" />
+    <img class="w-8 h-auto overflow-y-clip hidden" alt="Pasted Image" />
     <div class="flex gap-2">
       <button
         _="
