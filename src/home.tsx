@@ -258,7 +258,26 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         on resize from window call autoResize(me)
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
-        on blur if I do not match @disabled add .border-dashed
+        on blur if I do not match @disabled add .border-dashed end
+        on paste
+          set clipboardItems to event.clipboardData.items
+          set imagePreview to #imagePreview
+          repeat for item in clipboardItems
+            if item.type.startsWith('image/')
+              js(item, imagePreview)
+                const file = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                  imagePreview.src = e.target.result;
+                  imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+              end
+              halt the event
+              break
+            end
+          end
+        end
       "
       id={`task-title-${id}`}
       class={`titleInput ${checked ? "line-through" : ""} flex-1 cursor-text bg-transparent outline-none w-1/2 resize-none overflow-y-hidden`}
@@ -268,11 +287,12 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     >
       {title}
     </textarea>
+    <img id="imagePreview" class="w-8 h-auto overflow-y-clip hidden" alt="Pasted Image" />
     <div class="flex gap-2">
       <button
         _="
           on click
-            set input to my parentElement's previousElementSibling
+            set input to (my parentElement's previousElementSibling).previousElementSibling
             remove @disabled from input then call input.focus()
             set input's selectionStart to input.value.length then set input's selectionEnd to input.value.length
             add .border-b .border-input to input
