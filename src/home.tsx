@@ -228,6 +228,13 @@ export const TaskList = (props: { children: any }) => html`
       </svg>
     </div>
   </div>
+  <div
+    id="img-view"
+    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50"
+    _="on click add .hidden"
+  >
+    <img id="full-img" class="max-w-3xl max-h-3xl object-contain" alt="Full Size Image" />
+  </div>
 </div>
 `
 
@@ -287,7 +294,16 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     >
       {title}
     </textarea>
-    <img class="w-8 h-auto overflow-y-clip hidden" alt="Pasted Image" />
+    <img
+      class="w-8 h-auto overflow-y-clip hidden cursor-pointer"
+      alt="Pasted Image"
+      _="
+      on click
+        set modalImage to the first <img/> in #img-view
+        set modalImage.src to my.src
+        remove .hidden from #img-view
+      "
+    />
     <div class="flex gap-2">
       <button
         _="
