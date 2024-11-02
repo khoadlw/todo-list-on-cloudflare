@@ -261,8 +261,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         -- Behavior: AutoResize + Editable
         def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
         init immediately call autoResize(me) then set :original to my value
-        on input call autoResize(me)
-        on resize from window call autoResize(me)
+        on input or imagePasted or resize from window log 'autoresize' then call autoResize(me)
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
         on blur if I do not match @disabled add .border-dashed end
@@ -271,12 +270,13 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
           set imagePreview to my nextElementSibling
           repeat for item in clipboardItems
             if item.type.startsWith('image/')
-              js(item, imagePreview)
+              js(item, imagePreview, me)
                 const file = item.getAsFile();
                 const reader = new FileReader();
                 reader.onload = function(e) {
                   imagePreview.src = e.target.result;
                   imagePreview.classList.remove('hidden');
+                  me.dispatchEvent(new CustomEvent('imagePasted'));
                 };
                 reader.readAsDataURL(file);
               end
@@ -294,9 +294,10 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     >
       {title}
     </textarea>
+    {/* TODO: Use different image resolution for thumbnail */}
     <img
       class="w-8 h-auto overflow-y-clip hidden cursor-pointer"
-      alt="Pasted Image"
+      alt="Image Thumbnail"
       _="
       on click
         set modalImage to the first <img/> in #img-view
