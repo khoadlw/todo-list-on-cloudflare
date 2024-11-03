@@ -287,7 +287,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         -- Behavior: AutoResize + Editable
         def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
         init immediately call autoResize(me) then set :original to my value
-        on input or imagePasted or resize from window call autoResize(me)
+        on input or imagePasted or imageRemoved or resize from window call autoResize(me)
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
         on blur if I do not match @disabled add .border-dashed end
@@ -339,6 +339,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
           set imgPreview to my previousElementSibling
           set imgPreview.src to ''
           add .hidden to imgPreview.parentElement
+          send imageRemoved to my parentElement's previousElementSibling
         "
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
