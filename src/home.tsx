@@ -230,10 +230,36 @@ export const TaskList = (props: { children: any }) => html`
   </div>
   <div
     id="img-view"
-    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50"
+    class="fixed inset-0 p-2 bg-black bg-opacity-70 flex items-center justify-center hidden z-50"
     _="on click add .hidden"
-  >
-    <img id="full-img" class="max-w-3xl max-h-3xl object-contain" alt="Full Size Image" />
+   >
+    <div class="relative" _="on click halt the event">
+      <img id="full-img" class="object-contain" alt="Full Size Image" />
+      <button
+        id="delete-image"
+        class="absolute top-0 right-0 mt-2 mr-2 bg-black bg-opacity-50 text-white p-2 rounded-sm"
+        title="Delete Image (No Undo)"
+        _="on click add .hidden to #img-view"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-4 h-4"
+        >
+          <path d="M3 6h18"/>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+          <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 `
@@ -261,13 +287,13 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         -- Behavior: AutoResize + Editable
         def autoResize(ta) set ta.style.height to 'auto' then set ta.style.height to (ta.scrollHeight + 'px') end
         init immediately call autoResize(me) then set :original to my value
-        on input or imagePasted or resize from window log 'autoresize' then call autoResize(me)
+        on input or imagePasted or resize from window call autoResize(me)
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
         on blur if I do not match @disabled add .border-dashed end
         on paste
           set clipboardItems to event.clipboardData.items
-          set imagePreview to my nextElementSibling
+          set imagePreview to the first <img/> in my nextElementSibling
           repeat for item in clipboardItems
             if item.type.startsWith('image/')
               js(item, imagePreview, me)
@@ -275,7 +301,7 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
                 const reader = new FileReader();
                 reader.onload = function(e) {
                   imagePreview.src = e.target.result;
-                  imagePreview.classList.remove('hidden');
+                  imagePreview.parentElement.classList.remove('hidden');
                   me.dispatchEvent(new CustomEvent('imagePasted'));
                 };
                 reader.readAsDataURL(file);
@@ -294,17 +320,32 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
     >
       {title}
     </textarea>
-    {/* TODO: Use different image resolution for thumbnail */}
-    <img
-      class="w-8 h-auto overflow-y-clip hidden cursor-pointer"
-      alt="Image Thumbnail"
-      _="
-      on click
-        set modalImage to the first <img/> in #img-view
-        set modalImage.src to my.src
-        remove .hidden from #img-view
-      "
-    />
+    <div class="relative hidden group">
+      {/* TODO: Use different image resolution for thumbnail */}
+      <img
+        class="w-8 h-auto overflow-y-clip cursor-pointer"
+        alt="Image Thumbnail"
+        _="
+        on click
+          set modalImage to the first <img/> in #img-view
+          set modalImage.src to my.src
+          remove .hidden from #img-view
+        "
+      />
+      <button
+        class="absolute -top-1 -right-1 bg-black bg-opacity-50 text-white p-1 rounded-full hidden group-hover:block"
+        title="Delete Image (No Undo)"
+        _="on click
+          set imgPreview to my previousElementSibling
+          set imgPreview.src to ''
+          add .hidden to imgPreview.parentElement
+        "
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
     <div class="flex gap-2">
       <button
         _="
