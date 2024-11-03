@@ -233,33 +233,7 @@ export const TaskList = (props: { children: any }) => html`
     class="fixed inset-0 p-2 bg-black bg-opacity-70 flex items-center justify-center hidden z-50"
     _="on click add .hidden"
    >
-    <div class="relative" _="on click halt the event">
-      <img id="full-img" class="object-contain" alt="Full Size Image" />
-      <button
-        id="delete-image"
-        class="absolute top-0 right-0 mt-2 mr-2 bg-black bg-opacity-50 text-white p-2 rounded-sm"
-        title="Delete Image (No Undo)"
-        _="on click add .hidden to #img-view"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="w-4 h-4"
-        >
-          <path d="M3 6h18"/>
-          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-          <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
-        </svg>
-      </button>
-    </div>
+    <img id="full-img" class="object-contain" _="on click halt the event" alt="Full Size Image" />
   </div>
 </div>
 `
