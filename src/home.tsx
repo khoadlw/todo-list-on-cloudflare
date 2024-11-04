@@ -270,16 +270,14 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
           set imagePreview to the first <img/> in my nextElementSibling
           repeat for item in clipboardItems
             if item.type.startsWith('image/')
-              js(item, imagePreview, me)
-                const file = item.getAsFile();
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                  imagePreview.src = e.target.result;
-                  imagePreview.parentElement.classList.remove('hidden');
-                  me.dispatchEvent(new CustomEvent('imagePasted'));
-                };
-                reader.readAsDataURL(file);
-              end
+              set file to item.getAsFile()
+              set imagePreview.src to URL.createObjectURL(file)
+              remove .hidden from imagePreview.parentElement
+              -- upload the pasted image --
+              fetch /presignedUrls?path=test as a String with method:'GET'
+              fetch `${the result}` as JSON with method:'PUT', body:file
+              log the result  -- TODO: (1) Show a toast; (2) Debounce
+              trigger imagePasted
               halt the event
               break
             end
