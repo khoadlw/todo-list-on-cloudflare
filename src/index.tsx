@@ -6,6 +6,7 @@ import { logger } from 'hono/logger'
 import type { TimingVariables } from 'hono/timing'
 import { endTime, startTime, timing } from 'hono/timing'
 import { z } from 'zod'
+import { AwsClient } from 'aws4fetch'
 
 // @ts-ignore -- this is a hack for Cloudflare Workers only
 import manifest from '__STATIC_CONTENT_MANIFEST'
@@ -133,6 +134,26 @@ app.delete('/todo/:id', async (c) => {
   endTime(c, 'db-delete')
   c.status(200)
   return c.body(null)
+})
+
+const r2 = new AwsClient({
+  accessKeyId: "",
+  secretAccessKey: "",
+})
+
+app.get('/presignedUrls', async (c) => {
+  const objectKey = c.req.query('path') || ''
+  if (!objectKey) return c.json({ error: 'No path provided' }, 400)
+
+  const bucketName = "TODO-bucket-name"
+  const accountId = "TODO-account-id"
+  const url = new URL(`https://${bucketName}.${accountId}.r2.cloudflarestorage.com`)
+  url.pathname = objectKey
+  url.searchParams.set("X-Amz-Expires", "3600")
+  const signed = await r2.sign(
+    new Request(url, { method: "PUT" }), { aws: { signQuery: true } }
+  )
+  return c.text(signed.url)
 })
 
 export default app
