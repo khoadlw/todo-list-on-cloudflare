@@ -17,8 +17,14 @@ type Variables = TimingVariables
 
 type Bindings = {
   DB: D1Database
+  ASSETS: R2Bucket
   USERNAME: string
   PASSWORD: string
+  R2_ACCESS_KEY_ID: string
+  R2_SECRET_ACCESS_KEY: string
+  R2_ENDPOINT: string
+  R2_BUCKET: string
+  ACCOUNT_ID: string
 }
 
 type Todo = {
@@ -136,17 +142,16 @@ app.delete('/todo/:id', async (c) => {
   return c.body(null)
 })
 
-const r2 = new AwsClient({
-  accessKeyId: "",
-  secretAccessKey: "",
-})
-
 app.get('/presignedUrls', async (c) => {
   const objectKey = c.req.query('path') || ''
   if (!objectKey) return c.json({ error: 'No path provided' }, 400)
 
-  const bucketName = "TODO-bucket-name"
-  const accountId = "TODO-account-id"
+  const r2 = new AwsClient({
+    accessKeyId: c.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: c.env.R2_SECRET_ACCESS_KEY,
+  })
+  const bucketName = c.env.R2_BUCKET
+  const accountId = c.env.ACCOUNT_ID
   const url = new URL(`https://${bucketName}.${accountId}.r2.cloudflarestorage.com`)
   url.pathname = objectKey
   url.searchParams.set("X-Amz-Expires", "3600")

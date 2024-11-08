@@ -45,8 +45,13 @@ npx wrangler d1 migrations apply todo --local
 
 ```
 touch .dev.vars
-echo "USERNAME=<your-user-name>" >> .dev.vars
+echo "USERNAME=<your-username>" >> .dev.vars
 echo "PASSWORD=<your-password>" >> .dev.vars
+echo "R2_ACCESS_KEY_ID=<key-id>" >> .dev.vars
+echo "R2_SECRET_ACCESS_KEY=<secret-key>" >> .dev.vars
+echo "R2_ENDPOINT=<endpoint>" >> .dev.vars
+echo "R2_BUCKET=<bucket-name>" >> .dev.vars
+echo "ACCOUNT_ID=<account-id>" >> .dev.vars
 ```
 
 ```
@@ -63,6 +68,11 @@ npx wrangler d1 migrations apply todo
 ```
 npx wrangler secret put USERNAME
 npx wrangler secret put PASSWORD
+npx wrangler secret put R2_ACCESS_KEY_ID
+npx wrangler secret put R2_SECRET_ACCESS_KEY
+npx wrangler secret put R2_ENDPOINT
+npx wrangler secret put R2_BUCKET
+npx wrangler secret put ACCOUNT_ID
 ```
 
 ```
