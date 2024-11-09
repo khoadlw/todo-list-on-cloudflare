@@ -154,7 +154,7 @@ app.get('/presignedUrls', async (c) => {
   const accountId = c.env.ACCOUNT_ID
   const url = new URL(`https://${bucketName}.${accountId}.r2.cloudflarestorage.com`)
   url.pathname = objectKey
-  url.searchParams.set("X-Amz-Expires", "3600")
+  url.searchParams.set("X-Amz-Expires", "300")
   const signed = await r2.sign(
     new Request(url, { method: "PUT" }), { aws: { signQuery: true } }
   )

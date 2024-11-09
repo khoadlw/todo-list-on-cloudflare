@@ -265,18 +265,21 @@ export const Item = ({ title, id, checked }: { title: string; id: string, checke
         on keydown[key is 'Enter'] halt the event
         on keydown[key is 'Escape'] add @disabled then remove .border-b .border-input then set my value to :original
         on blur if I do not match @disabled add .border-dashed end
-        on paste
+        on paste throttled at 1s
           set clipboardItems to event.clipboardData.items
           set imagePreview to the first <img/> in my nextElementSibling
           repeat for item in clipboardItems
             if item.type.startsWith('image/')
+              -- 1. extract and display the image preview --
               set file to item.getAsFile()
               set imagePreview.src to URL.createObjectURL(file)
               remove .hidden from imagePreview.parentElement
-              -- upload the pasted image --
-              fetch /presignedUrls?path=test as a String with method:'GET'
-              fetch `${the result}` as JSON with method:'PUT', body:file
-              log the result  -- TODO: (1) Show a toast; (2) Debounce
+              -- 2. upload the pasted image --
+              set itemId to my parentElement's @id
+              set imagePath to `images/${itemId}/${Date.now()}`
+              fetch `/presignedUrls?path=${encodeURIComponent(imagePath)}` as a String with method:'GET'
+              fetch `${the result}` with method:'PUT', body:file
+              log the result  --
               trigger imagePasted
               halt the event
               break
