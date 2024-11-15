@@ -5,6 +5,7 @@
 * Deployment platform: Cloudflare (Workers)
 * Backend framework: Hono (JS)
 * Database: Cloudflare D1
+* Object storage: Cloudflare R2
 * Frontend libraries: htmx + _hyperscript
 * CSS framework: Tailwind CSS
 * UI design tool: v0.dev
