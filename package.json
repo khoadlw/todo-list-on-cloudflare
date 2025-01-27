@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "dev": "wrangler dev --live-reload src/index.tsx",
-    "deploy": "wrangler deploy --minify src/index.tsx"
+    "dev": "sh -c 'tailwindcss -i src/globals.css -o public/css/styles.css --watch & wrangler dev --live-reload src/index.tsx & trap \"kill $!\" SIGINT; wait'",
+    "deploy": "tailwindcss -i src/globals.css -o public/css/styles.css && wrangler deploy --minify src/index.tsx"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.1.11",
